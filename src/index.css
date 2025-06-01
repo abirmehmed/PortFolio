@@ -1,0 +1,430 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 215 30% 10%;
+    --foreground: 210 40% 98%;
+
+    --card: 215 30% 14%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 215 30% 14%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 39 75% 58%;
+    --primary-foreground: 215 30% 10%;
+
+    --secondary: 195 85% 60%;
+    --secondary-foreground: 215 30% 10%;
+
+    --muted: 215 27% 25%;
+    --muted-foreground: 210 20% 80%;
+
+    --accent: 39 75% 58%;
+    --accent-foreground: 215 30% 10%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 215 27% 20%;
+    --input: 215 27% 20%;
+    --ring: 39 75% 58%;
+
+    --radius: 0.5rem;
+  }
+
+  /* Light theme colors */
+  .light-theme {
+    --background: 0 0% 100%;
+    --foreground: 215 30% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 215 30% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 30% 10%;
+
+    --primary: 39 75% 58%;
+    --primary-foreground: 215 30% 10%;
+
+    --secondary: 195 85% 60%;
+    --secondary-foreground: 215 30% 10%;
+
+    --muted: 215 27% 95%;
+    --muted-foreground: 215 27% 40%;
+
+    --accent: 39 75% 58%;
+    --accent-foreground: 215 30% 10%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 215 27% 85%;
+    --input: 215 27% 85%;
+    --ring: 39 75% 58%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-detective-dark text-foreground antialiased selection:bg-detective-accent/30 selection:text-white;
+    font-feature-settings: "ss01", "ss02", "cv01", "cv02", "cv03";
+  }
+
+  .light-theme body {
+    @apply bg-white text-foreground antialiased selection:bg-detective-accent/30 selection:text-black;
+  }
+
+  ::-webkit-scrollbar {
+    @apply w-1.5;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-detective-dark;
+  }
+
+  .light-theme ::-webkit-scrollbar-track {
+    @apply bg-gray-200;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-detective-accent/60 transition-colors hover:bg-detective-accent;
+  }
+  
+  /* Chess piece styles */
+  .chess-piece {
+    font-family: "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
+    transition: all 0.2s ease;
+    transform-origin: center;
+  }
+  
+  .chess-piece:hover {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 3px rgba(226, 168, 69, 0.7));
+  }
+  
+  /* Chess board animation for piece movement */
+  @keyframes piece-move {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  
+  .piece-moving {
+    animation: piece-move 0.5s ease;
+  }
+
+  /* Chess dialog styles */
+  .promotion-option {
+    @apply transition-all duration-200 hover:scale-110 hover:shadow-lg;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-white/5 backdrop-blur-lg border border-white/10 shadow-xl;
+  }
+  
+  .detective-card {
+    @apply bg-card border border-border/40 rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-detective-accent/5 hover:-translate-y-1;
+  }
+  
+  .nav-link {
+    @apply relative px-3 py-2 text-muted-foreground transition-colors hover:text-foreground after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-detective-accent after:transition-all hover:after:w-full;
+  }
+  
+  .social-icon {
+    @apply text-muted-foreground transition-all duration-300 hover:text-detective-accent hover:scale-110;
+  }
+  
+  .animated-line {
+    @apply relative overflow-hidden before:absolute before:h-0.5 before:w-full before:bg-detective-accent before:-translate-x-full before:transition-transform before:duration-500 hover:before:translate-x-0;
+  }
+  
+  .heading-accent {
+    @apply relative inline-block;
+  }
+  
+  .heading-accent::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-1/3 h-1 bg-detective-accent rounded-full;
+  }
+  
+  .typewriter {
+    @apply relative after:absolute after:right-0 after:top-0 after:h-full after:w-[2px] after:animate-typewriter-blink after:bg-detective-accent;
+  }
+  
+  .parallax-bg {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
+  /* Scroll animation classes */
+  .scroll-animate {
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .scroll-animate.animate-fade-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .scroll-animate:not(.animate-fade-in) {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  
+  /* New animations for scroll effects */
+  .scroll-fade-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: all 0.8s ease-out;
+  }
+  
+  .scroll-fade-right {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: all 0.8s ease-out;
+  }
+  
+  .scroll-fade-up {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s ease-out;
+  }
+  
+  .scroll-fade-down {
+    opacity: 0;
+    transform: translateY(-50px);
+    transition: all 0.8s ease-out;
+  }
+  
+  .scroll-fade-left.animate-fade-in,
+  .scroll-fade-right.animate-fade-in,
+  .scroll-fade-up.animate-fade-in,
+  .scroll-fade-down.animate-fade-in {
+    opacity: 1;
+    transform: translate(0);
+  }
+  
+  /* Animated chess board classes */
+  .chess-hover-effect {
+    transition: all 0.3s ease;
+  }
+  
+  .chess-hover-effect:hover {
+    box-shadow: 0 0 15px 5px rgba(var(--accent), 0.4);
+    transform: translateY(-5px);
+  }
+  
+  /* New animations for ProfileHeroInfo */
+  .bg-size-200 {
+    background-size: 200% 100%;
+  }
+  
+  .animate-gradient-x {
+    animation: gradient-x 5s ease infinite;
+  }
+  
+  @keyframes gradient-x {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  .animate-shimmer {
+    animation: shimmer 2s ease-in-out infinite;
+    background: linear-gradient(90deg, 
+      rgba(255, 255, 255, 0) 0%, 
+      rgba(255, 255, 255, 0.05) 50%, 
+      rgba(255, 255, 255, 0) 100%);
+    background-size: 200% 100%;
+  }
+  
+  @keyframes shimmer {
+    0% { background-position: -100% 0; }
+    100% { background-position: 100% 0; }
+  }
+  
+  .animate-letter-spacing {
+    transition: letter-spacing 0.5s ease;
+  }
+  
+  .animate-letter-spacing:hover {
+    letter-spacing: 0.05em;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  .text-gradient {
+    @apply bg-gradient-to-r from-detective-accent to-detective-blue bg-clip-text text-transparent;
+  }
+  
+  .bg-gradient-overlay {
+    @apply bg-gradient-to-b from-transparent to-detective-dark;
+  }
+
+  .light-theme .bg-gradient-overlay {
+    @apply bg-gradient-to-b from-transparent to-white;
+  }
+  
+  .animate-pulse-subtle {
+    animation: pulse 3s infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.7;
+    }
+  }
+  
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  .animate-spin-slow {
+    animation: spin 15s linear infinite;
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .animate-progress-indeterminate {
+    animation: progress-indeterminate 1.5s ease-in-out infinite;
+  }
+
+  @keyframes progress-indeterminate {
+    0% { transform: translateX(-100%); }
+    50% { transform: translateX(0); }
+    100% { transform: translateX(100%); }
+  }
+  
+  .text-shadow-glow {
+    text-shadow: 0 0 5px rgba(var(--accent), 0.5), 
+                 0 0 20px rgba(var(--accent), 0.3);
+  }
+  
+  .hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 
+                0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+}
+
+.clip-path-slant {
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+}
+
+.section-spacing {
+  @apply py-20 md:py-28;
+}
+
+/* Animation delays */
+.delay-100 {
+  animation-delay: 0.1s;
+}
+.delay-200 {
+  animation-delay: 0.2s;
+}
+.delay-300 {
+  animation-delay: 0.3s;
+}
+.delay-400 {
+  animation-delay: 0.4s;
+}
+.delay-500 {
+  animation-delay: 0.5s;
+}
+.delay-600 {
+  animation-delay: 0.6s;
+}
+.delay-700 {
+  animation-delay: 0.7s;
+}
+.delay-800 {
+  animation-delay: 0.8s;
+}
+
+/* High contrast mode styles */
+.high-contrast {
+  --background: #000000;
+  --foreground: #ffffff;
+  --card: #1a1a1a;
+  --card-foreground: #ffffff;
+  --popover: #1a1a1a;
+  --popover-foreground: #ffffff;
+  --primary: #ffcc00;
+  --primary-foreground: #000000;
+  --secondary: #ffffff;
+  --secondary-foreground: #000000;
+  --muted: #333333;
+  --muted-foreground: #e6e6e6;
+  --accent: #ffcc00;
+  --accent-foreground: #000000;
+  --destructive: #ff4444;
+  --destructive-foreground: #ffffff;
+  --border: #444444;
+  --input: #444444;
+  --ring: #ffcc00;
+}
+
+/* Reduced motion styles */
+.reduced-motion * {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
